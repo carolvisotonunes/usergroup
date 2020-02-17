@@ -29,10 +29,9 @@ public class UserService {
     }
 
     public User update(User user, Long id) {
-
-        User userByFind = userRepository.findById(id).get();
-        if (userByFind != null) {
-            User db = userByFind;
+        User userUpdate = userRepository.findById(id).get();
+        if (userUpdate != null) {
+            User db = userUpdate;
             db.setEmail(user.getEmail());
             db.setUserName(user.getUserName());
             userRepository.save(db);

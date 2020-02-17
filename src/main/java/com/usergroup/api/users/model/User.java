@@ -1,29 +1,33 @@
 package com.usergroup.api.users.model;
 
 import com.usergroup.api.groups.model.Group;
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
-@Table(name="user_info")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
     private String userName;
+    @NotNull
     private String email;
-
 
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_group",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"))
-    private List<Group> groups;
-
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private List<Group> groups = new ArrayList<>();
 
 
 }

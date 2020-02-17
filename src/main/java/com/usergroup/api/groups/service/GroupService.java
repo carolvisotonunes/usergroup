@@ -10,7 +10,6 @@ import java.util.List;
 @Service
 public class GroupService {
 
-
     @Autowired
     GroupRepository groupRepository;
 
@@ -30,9 +29,9 @@ public class GroupService {
 
     public Group update(Group user, Long id) {
 
-        Group userByFind = groupRepository.findById(id).get();
-        if (userByFind != null) {
-            Group db = userByFind;
+        Group groupUpdate = groupRepository.findById(id).get();
+        if (groupUpdate != null) {
+            Group db = groupUpdate;
             db.setName(user.getName());
             groupRepository.save(db);
             return db;
