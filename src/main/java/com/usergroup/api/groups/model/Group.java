@@ -1,5 +1,7 @@
 package com.usergroup.api.groups.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.usergroup.api.users.model.User;
 import lombok.Data;
 
@@ -21,7 +23,9 @@ public class Group {
     @Size(max = 250)
     private String name;
 
-    @ManyToMany(mappedBy = "groups", cascade = { CascadeType.ALL })
+    @ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL)
+
+    @JsonBackReference
     private List<User> users = new ArrayList<>();
 
 }
