@@ -23,8 +23,7 @@ public class Group {
     @Size(max = 250)
     private String name;
 
-    @ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL)
-
+    @ManyToMany(mappedBy = "groups")
     @JsonBackReference
     private List<User> users = new ArrayList<>();
 

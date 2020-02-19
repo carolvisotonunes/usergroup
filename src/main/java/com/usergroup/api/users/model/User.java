@@ -28,7 +28,6 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "group_id"))
 
-    @JsonManagedReference
     private List<Group> groups = new ArrayList<>();
 
 }
