@@ -14,8 +14,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/api/v1/groups")
 public class GroupController {
-
-
     @Autowired
     GroupService groupService;
 
@@ -28,16 +26,15 @@ public class GroupController {
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         Group group = groupService.getGroupById(id);
-
         return ResponseEntity.ok(group);
     }
 
     @PostMapping
     public ResponseEntity post(@RequestBody Group group) {
 
-        Group c = groupService.insert(group);
+        Group createdGroup = groupService.insert(group);
         URI location = getUri(group.getId());
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(createdGroup);
     }
 
 
@@ -45,7 +42,6 @@ public class GroupController {
     public ResponseEntity put(@PathVariable("id") Long id, @RequestBody Group group) {
 
         Group groupUpdate = groupService.update(group, id);
-
         return groupUpdate != null ?
                 ResponseEntity.ok(groupUpdate) :
                 ResponseEntity.notFound().build();
@@ -54,7 +50,7 @@ public class GroupController {
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") Long id) {
         groupService.delete(id);
-        return ResponseEntity.ok().build();
+        return  ResponseEntity.ok().build();
     }
 
     private URI getUri(Long id) {

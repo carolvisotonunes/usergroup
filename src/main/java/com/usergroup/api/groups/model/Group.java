@@ -27,4 +27,12 @@ public class Group {
     @JsonBackReference
     private List<User> users = new ArrayList<>();
 
+
+    @PreRemove
+    private void removeGroupsFromUsers() {
+        for (User u : users) {
+            u.getGroups().remove(this);
+        }
+    }
+
 }

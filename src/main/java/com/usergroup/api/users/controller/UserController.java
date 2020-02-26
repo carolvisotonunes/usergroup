@@ -27,16 +27,16 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         User user = userService.getUserById(id);
-
-        return ResponseEntity.ok(user);
+        return user != null ?
+                ResponseEntity.ok(user) :
+                ResponseEntity.notFound().build();
     }
 
     @PostMapping
     public ResponseEntity post(@RequestBody User user) {
-
-        User c = userService.insert(user);
+        User createdUser = userService.insert(user);
         URI location = getUri(user.getId());
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(createdUser);
     }
 
 
@@ -52,8 +52,10 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") Long id) {
-        userService.delete(id);
-        return ResponseEntity.ok().build();
+        Boolean userDeleted = userService.delete(id);
+        return userDeleted != null ?
+                ResponseEntity.ok().build() :
+                ResponseEntity.notFound().build();
     }
 
     private URI getUri(Long id) {

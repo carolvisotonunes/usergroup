@@ -41,6 +41,11 @@ public class GroupService {
     }
 
     public void delete(Long id) {
+//       if(getGroupById(id) != null) {
+//           groupRepository.deleteById(id);
+//           return true;
+//       } else
+//           return false;
         groupRepository.deleteById(id);
     }
 }

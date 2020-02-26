@@ -1,6 +1,5 @@
 package com.usergroup.api.merge;
 
-import com.usergroup.api.groups.model.Group;
 import com.usergroup.api.groups.repository.GroupRepository;
 import com.usergroup.api.users.model.User;
 import com.usergroup.api.users.repository.UserRepository;
@@ -37,7 +36,27 @@ public class UserGroupService {
                 }
             return db;
         } else {
-            return db;
+            return null;
+        }
+
+    }
+
+    public List<User> removeAllGroupsFromUsers(GroupIds groups) {
+
+        List<User> users = userRepository.findAll();
+        if (users.size() > 0) {
+            for (User user : users) {
+                for (Long groupId : groups.getGroups()) {
+                    if (groupRepository.findById(groupId).isPresent()) {
+                        User db = user;
+                        db.getGroups().remove(groupRepository.findById(groupId).get());
+                    }
+                }
+            }
+            groupRepository.deleteAll();
+            return users;
+        } else {
+            return null;
         }
 
     }
