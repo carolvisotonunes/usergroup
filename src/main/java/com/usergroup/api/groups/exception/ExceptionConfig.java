@@ -1,4 +1,4 @@
-package com.usergroup.api.users.exception;
+package com.usergroup.api.groups.exception;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
@@ -11,5 +11,10 @@ public class ExceptionConfig {
     @ExceptionHandler({EmptyResultDataAccessException.class})
     public ResponseEntity errorNotFound(Exception e){
         return  ResponseEntity.notFound().build();
+    }
+
+    @ExceptionHandler({IllegalArgumentException.class})
+    public ResponseEntity errorBadRequest(Exception e){
+        return  ResponseEntity.badRequest().build();
     }
 }
