@@ -1,11 +1,14 @@
 package com.usergroup.api.users.service;
 
+import com.usergroup.api.exception.ObjectNotFoundException;
 import com.usergroup.api.users.model.User;
 import com.usergroup.api.users.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -20,12 +23,17 @@ public class UserService {
     }
 
     public User insert(User user) {
+        Assert.isNull(user.getId(), "It's not possible to insert, the User Id must be null");
         return userRepository.save(user);
     }
 
     public User getUserById(Long id) {
-        User user = userRepository.findById(id).get();
-        return user;
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            return user.get();
+        } else {
+            throw new ObjectNotFoundException("User not found");
+        }
     }
 
     public User update(User user, Long id) {
@@ -41,14 +49,8 @@ public class UserService {
         }
     }
 
-    public Boolean delete(Long id) {
-        if  (getUserById(id)!= null) {
-            userRepository.deleteById(id);
-            return true;
-        } else{
-            return false;
-        }
-
+    public void delete(Long id) {
+        userRepository.deleteById(id);
     }
 
 

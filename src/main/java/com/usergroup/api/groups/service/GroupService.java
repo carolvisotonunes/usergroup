@@ -1,5 +1,6 @@
 package com.usergroup.api.groups.service;
 
+import com.usergroup.api.exception.ObjectNotFoundException;
 import com.usergroup.api.groups.model.Group;
 import com.usergroup.api.groups.repository.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GroupService {
@@ -25,8 +27,12 @@ public class GroupService {
     }
 
     public Group getGroupById(Long id) {
-        Group user = groupRepository.findById(id).get();
-        return user;
+        Optional<Group> group = groupRepository.findById(id);
+        if (group.isPresent()) {
+            return group.get();
+        } else {
+            throw new ObjectNotFoundException("Group not found");
+        }
     }
 
     public Group update(Group group, Long id) {
