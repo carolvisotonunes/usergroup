@@ -31,7 +31,6 @@ public class GroupController {
 
     @PostMapping
     public ResponseEntity post(@RequestBody Group group) {
-
         Group createdGroup = groupService.insert(group);
         URI location = getUri(group.getId());
         return ResponseEntity.created(location).body(createdGroup);
@@ -40,7 +39,6 @@ public class GroupController {
 
     @PutMapping("/{id}")
     public ResponseEntity put(@PathVariable("id") Long id, @RequestBody Group group) {
-
         Group groupUpdate = groupService.update(group, id);
         return groupUpdate != null ?
                 ResponseEntity.ok(groupUpdate) :

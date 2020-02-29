@@ -23,6 +23,8 @@ public class GroupService {
 
     public Group insert(Group group) {
         Assert.isNull(group.getId(),"It's not possible to insert, the Group Id must be null");
+        Assert.notNull(group.getName(),"It's not possible to insert, the Group Name must not be null");
+        Assert.hasLength(group.getName(),"It's not possible to insert, the Group Name must not be empty");
         return groupRepository.save(group);
     }
 
@@ -36,7 +38,9 @@ public class GroupService {
     }
 
     public Group update(Group group, Long id) {
-
+        Assert.isNull(group.getId(),"It's not possible to update, the Group Id must be null");
+        Assert.notNull(group.getName(), "It's not possible to update, the Group Name must not be null");
+        Assert.hasLength(group.getName(),"It's not possible to update, the Group Email must not be empty");
         Group groupUpdate = groupRepository.findById(id).get();
         if (groupUpdate != null) {
             Group db = groupUpdate;
