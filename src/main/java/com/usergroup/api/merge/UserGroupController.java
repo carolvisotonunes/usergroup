@@ -30,9 +30,9 @@ public class UserGroupController {
     }
 
     @DeleteMapping("/users/{idUser}/group/{idGroup}")
-    public ResponseEntity<User> deleteAll(@PathVariable("idUser") Long idUser, @PathVariable("idUser") Long idGroup) {
-        User deleted = userGroupService.removeGroupFromUser(idUser, idGroup);
-        return ResponseEntity.ok(deleted);
+    public ResponseEntity deleteAll(@PathVariable("idUser") Long idUser, @PathVariable("idUser") Long idGroup) {
+        userGroupService.deleteGroupFromUser(idUser, idGroup);
+        return ResponseEntity.ok().build();
     }
 
 
